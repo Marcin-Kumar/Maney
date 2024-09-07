@@ -1,6 +1,6 @@
 package org.maney.income.domain;
 
-class Income {
+public class Income {
     private double _amount;
     private final Currency _currency;
 
