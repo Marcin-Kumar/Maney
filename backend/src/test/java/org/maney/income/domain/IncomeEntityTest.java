@@ -1,12 +1,11 @@
-package income.domain;
+package org.maney.income.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.maney.income.domain.Currency;
-import org.maney.income.domain.Income;
-import org.maney.income.domain.IncomeCategory;
+
+import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -20,18 +19,18 @@ public class IncomeEntityTest {
     @DisplayName("WHEN a negative amount is provided " +
             "THEN the absolute value is taken")
     void testIncomeWithNegativeAmount() {
-        final Income income = new Income(-100, Currency.SWISS_FRANK, OWNER_ID);
+        final Income income = new Income(BigDecimal.valueOf(-100.0), Currency.SWISS_FRANK, OWNER_ID);
 
-        assertEquals(100, income.get_amount());
+        assertEquals(BigDecimal.valueOf(100.0), income.amount);
     }
 
     @ParameterizedTest
     @DisplayName("Income.toString() returns {amount} {currency symbol} (eg: 100 CHF)")
-    @ValueSource(doubles = {12, 1000.99, -2, -0.0})
+    @ValueSource(doubles = {12, 1000.99, -2, -0.0, 0})
     void testIncomeToString(double inputAmount) {
-        final Income income = new Income(inputAmount, CURRENCY, OWNER_ID);
+        final Income income = new Income(BigDecimal.valueOf(inputAmount), CURRENCY, OWNER_ID);
 
-        if(inputAmount < 0) {
+        if(inputAmount <= 0) {
             assertEquals(Math.abs(inputAmount)
                     + " "
                     + CURRENCY, income.toString());
@@ -46,7 +45,7 @@ public class IncomeEntityTest {
     @DisplayName("WHEN no category is provided " +
             "THEN category is set to "+ UNCATEGORIZED)
     void testCategoryNotSpecified() {
-        final Income income = new Income(100, Currency.SWISS_FRANK, OWNER_ID);
+        final Income income = new Income(BigDecimal.valueOf(100.5), Currency.SWISS_FRANK, OWNER_ID);
 
         assertEquals(UNCATEGORIZED, income.get_category().get_name());
         assertEquals("", income.get_category().get_description());
@@ -58,7 +57,7 @@ public class IncomeEntityTest {
     void testCategorySpecified() {
         String name = "name";
         String description = "description";
-        final Income income = new Income(100,
+        final Income income = new Income(BigDecimal.valueOf(100),
                 Currency.SWISS_FRANK,
                 new IncomeCategory(name, description),
                 OWNER_ID
