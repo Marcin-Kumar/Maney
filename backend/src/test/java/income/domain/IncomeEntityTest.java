@@ -14,12 +14,13 @@ public class IncomeEntityTest {
 
     public static final Currency CURRENCY = Currency.SWISS_FRANK;
     public static final String UNCATEGORIZED = "UNCATEGORIZED";
+    public static final String OWNER_ID = "OWNER_ID";
 
     @Test
     @DisplayName("WHEN a negative amount is provided " +
             "THEN the absolute value is taken")
     void testIncomeWithNegativeAmount() {
-        final Income income = new Income(-100, Currency.SWISS_FRANK);
+        final Income income = new Income(-100, Currency.SWISS_FRANK, OWNER_ID);
 
         assertEquals(100, income.get_amount());
     }
@@ -28,14 +29,14 @@ public class IncomeEntityTest {
     @DisplayName("Income.toString() returns {amount} {currency symbol} (eg: 100 CHF)")
     @ValueSource(doubles = {12, 1000.99, -2, -0.0})
     void testIncomeToString(double inputAmount) {
-        final Income income = new Income(inputAmount, CURRENCY);
+        final Income income = new Income(inputAmount, CURRENCY, OWNER_ID);
 
         if(inputAmount < 0) {
-            assertEquals(String.valueOf(Math.abs(inputAmount))
+            assertEquals(Math.abs(inputAmount)
                     + " "
                     + CURRENCY, income.toString());
         } else {
-            assertEquals(String.valueOf(inputAmount)
+            assertEquals(inputAmount
                     + " "
                     + CURRENCY, income.toString());
         }
@@ -45,7 +46,7 @@ public class IncomeEntityTest {
     @DisplayName("WHEN no category is provided " +
             "THEN category is set to "+ UNCATEGORIZED)
     void testCategoryNotSpecified() {
-        final Income income = new Income(100, Currency.SWISS_FRANK);
+        final Income income = new Income(100, Currency.SWISS_FRANK, OWNER_ID);
 
         assertEquals(UNCATEGORIZED, income.get_category().get_name());
         assertEquals("", income.get_category().get_description());
@@ -59,8 +60,9 @@ public class IncomeEntityTest {
         String description = "description";
         final Income income = new Income(100,
                 Currency.SWISS_FRANK,
-                new IncomeCategory(name, description)
-        );
+                new IncomeCategory(name, description),
+                OWNER_ID
+                );
 
         assertEquals(name, income.get_category().get_name());
         assertEquals(description, income.get_category().get_description());
