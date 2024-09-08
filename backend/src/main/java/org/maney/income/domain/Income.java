@@ -3,6 +3,8 @@ package org.maney.income.domain;
 import java.util.Date;
 
 public class Income {
+    // todo remove underscore
+    // todo remove private
     private final double _amount;
     private final Currency _currency;
     private final Date _timestamp;
