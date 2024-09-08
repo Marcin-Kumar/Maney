@@ -1,6 +1,7 @@
 package org.maney.expense.domain;
 
-public class addExpense {
+public class AddExpense {
+
     public void execute() {
 
     }
