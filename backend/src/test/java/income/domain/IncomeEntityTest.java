@@ -12,10 +12,14 @@ public class IncomeEntityTest {
     public static final Currency CURRENCY = Currency.SWISS_FRANK;
 
     @ParameterizedTest
-    @ValueSource(doubles = {12, 1000.99, -2})
-    void testIncomeToString(double amount) {
-        final Income income = new Income(amount, CURRENCY);
+    @ValueSource(doubles = {12, 1000.99, -2, -0.0})
+    void testIncomeToString(double inputAmount) {
+        final Income income = new Income(inputAmount, CURRENCY);
 
-        assertEquals(String.valueOf(amount) + CURRENCY, income.toString());
+        if(inputAmount < 0) {
+            assertEquals(String.valueOf(Math.abs(inputAmount)) + CURRENCY, income.toString());
+        } else {
+            assertEquals(String.valueOf(inputAmount) + CURRENCY, income.toString());
+        }
     }
 }
