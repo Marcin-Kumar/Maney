@@ -1,19 +1,15 @@
 package org.maney.income.domain;
 
 import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.Date;
 
 public class Income {
     BigDecimal amount;
+    IncomeCategory category;
     Currency currency;
-    Date timestamp;
     String ownerId;
-
-    public IncomeCategory get_category() {
-        return _category;
-    }
-
-    private final IncomeCategory _category;
+    Date timestamp;
 
     public Income(BigDecimal amount, Currency currency, String ownerId) {
         this.amount = amount.compareTo(BigDecimal.ZERO) < 0
@@ -22,7 +18,7 @@ public class Income {
         this.currency = currency;
         this.ownerId = ownerId;
         this.timestamp = new Date();
-        this._category = new IncomeCategory("UNCATEGORIZED");
+        this.category = new IncomeCategory("UNCATEGORIZED");
     }
 
     public Income(BigDecimal amount, Currency currency, IncomeCategory category,  String ownerId) {
@@ -32,13 +28,13 @@ public class Income {
         this.currency = currency;
         this.ownerId = ownerId;
         this.timestamp = new Date();
-        this._category = category;
+        this.category = category;
     }
 
     @Override
     public String toString() {
         return this.amount
                 + " "
-                + this.currency.toString();
+                + this.currency.getSymbol();
     }
 }
