@@ -1,20 +1,21 @@
 package org.maney.income.domain;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.Date;
 
 public class IncomeModel {
     BigDecimal amount;
-    String category;
-    String currency;
+    String categoryName;
+    String currencyCode;
     String ownerId;
-    Date timestamp;
+    Instant timestamp;
 
 
-    public IncomeModel(BigDecimal amount, String currency, Date timestamp, String ownerId, String category) {
+    public IncomeModel(BigDecimal amount, String currencyCode, Instant timestamp, String ownerId, String categoryName) {
         this.amount = amount;
-        this.category = category;
-        this.currency = currency;
+        this.categoryName = categoryName;
+        this.currencyCode = currencyCode;
         this.ownerId = ownerId;
         this.timestamp = timestamp;
     }

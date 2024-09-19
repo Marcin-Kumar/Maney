@@ -1,13 +1,13 @@
 package org.maney.income.domain;
 
 public class IncomeMapper {
-    IncomeModel toModel(Income income) {
+    IncomeModel toModel(IncomeEntity incomeEntity) {
         return new IncomeModel(
-                income.amount,
-                income.currency.getCurrencyCode(),
-                income.timestamp,
-                income.ownerId,
-                income.category.name
+                incomeEntity.amount,
+                incomeEntity.currency.getCurrencyCode(),
+                incomeEntity.timestamp,
+                incomeEntity.ownerId,
+                incomeEntity.category.name
         );
     }
 }

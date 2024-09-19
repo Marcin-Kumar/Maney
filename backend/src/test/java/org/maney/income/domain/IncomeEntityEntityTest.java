@@ -10,7 +10,7 @@ import java.util.Currency;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class IncomeEntityTest {
+public class IncomeEntityEntityTest {
 
     public static final Currency SWISS_FRANK =  Currency.getInstance("CHF");
     public static final String UNCATEGORIZED = "UNCATEGORIZED";
@@ -20,25 +20,25 @@ public class IncomeEntityTest {
     @DisplayName("WHEN a negative amount is provided " +
             "THEN the absolute value is taken")
     void testIncomeWithNegativeAmount() {
-        final Income income = new Income(BigDecimal.valueOf(-100.0), SWISS_FRANK, OWNER_ID);
+        final IncomeEntity incomeEntity = new IncomeEntity(BigDecimal.valueOf(-100.0), SWISS_FRANK, OWNER_ID);
 
-        assertEquals(BigDecimal.valueOf(100.0), income.amount);
+        assertEquals(BigDecimal.valueOf(100.0), incomeEntity.amount);
     }
 
     @ParameterizedTest
-    @DisplayName("Income.toString() returns {amount} {currency symbol} (eg: 100 CHF)")
+    @DisplayName("IncomeEntity.toString() returns {amount} {currency symbol} (eg: 100 CHF)")
     @ValueSource(doubles = {12, 1000.99, -2, -0.0, 0})
     void testIncomeToString(double inputAmount) {
-        final Income income = new Income(BigDecimal.valueOf(inputAmount), SWISS_FRANK, OWNER_ID);
+        final IncomeEntity incomeEntity = new IncomeEntity(BigDecimal.valueOf(inputAmount), SWISS_FRANK, OWNER_ID);
 
         if(inputAmount <= 0) {
             assertEquals(Math.abs(inputAmount)
                     + " "
-                    + SWISS_FRANK, income.toString());
+                    + SWISS_FRANK, incomeEntity.toString());
         } else {
             assertEquals(inputAmount
                     + " "
-                    + SWISS_FRANK, income.toString());
+                    + SWISS_FRANK, incomeEntity.toString());
         }
     }
 
@@ -46,10 +46,10 @@ public class IncomeEntityTest {
     @DisplayName("WHEN no category is provided " +
             "THEN category is set to "+ UNCATEGORIZED)
     void testCategoryNotSpecified() {
-        final Income income = new Income(BigDecimal.valueOf(100.5), SWISS_FRANK, OWNER_ID);
+        final IncomeEntity incomeEntity = new IncomeEntity(BigDecimal.valueOf(100.5), SWISS_FRANK, OWNER_ID);
 
-        assertEquals(UNCATEGORIZED, income.category.name);
-        assertEquals("", income.category.description);
+        assertEquals(UNCATEGORIZED, incomeEntity.category.name);
+        assertEquals("", incomeEntity.category.description);
     }
 
     @Test
@@ -58,13 +58,13 @@ public class IncomeEntityTest {
     void testCategorySpecified() {
         String name = "name";
         String description = "description";
-        final Income income = new Income(BigDecimal.valueOf(100),
+        final IncomeEntity incomeEntity = new IncomeEntity(BigDecimal.valueOf(100),
                 SWISS_FRANK,
-                new IncomeCategory(name, description),
+                new IncomeCategoryEntity(name, description),
                 OWNER_ID
                 );
 
-        assertEquals(name, income.category.name);
-        assertEquals(description, income.category.description);
+        assertEquals(name, incomeEntity.category.name);
+        assertEquals(description, incomeEntity.category.description);
     }
 }
