@@ -14,8 +14,8 @@ import static org.mockito.Mockito.*;
 import static org.mockito.internal.util.MockUtil.resetMock;
 
 
-public class RecordIncomeTest {
-    RecordIncome recordIncome;
+public class LogIncomeTest {
+    LogIncome logIncome;
 
     IncomeRepository mockIncomeRepository;
     IncomeCategoryRepository mockIncomeCategoryRepository;
@@ -29,7 +29,7 @@ public class RecordIncomeTest {
         mockUserRepository = mock(UserRepository.class);
         mockIncomePresenter = mock(IncomePresenter.class);
 
-        recordIncome = new RecordIncome(
+        logIncome = new LogIncome(
                 mockIncomeRepository,
                 mockIncomeCategoryRepository,
                 mockUserRepository,
@@ -54,7 +54,7 @@ public class RecordIncomeTest {
     void recordIncomeWithCorrectInput() {
         final IncomeModel incomeModel = IncomeTesterUtil.buildIncomeModel(null);
 
-        recordIncome.invoke(incomeModel);
+        logIncome.invoke(incomeModel);
 
         verify(mockIncomeRepository, times(1))
                 .save(any(IncomeModel.class));
@@ -66,7 +66,7 @@ public class RecordIncomeTest {
         final IncomeModel incomeModel = IncomeTesterUtil.buildIncomeModel(null);
         when(mockUserRepository.doesUserExist(anyString())).thenReturn(false);
 
-        recordIncome.invoke(incomeModel);
+        logIncome.invoke(incomeModel);
 
         verify(mockIncomeRepository, times(0))
                 .save(any(IncomeModel.class));
@@ -80,7 +80,7 @@ public class RecordIncomeTest {
         final IncomeModel incomeModel = IncomeTesterUtil.buildIncomeModel(BigDecimal.valueOf(-10.5));
         when(mockUserRepository.doesUserExist(anyString())).thenReturn(false);
 
-        recordIncome.invoke(incomeModel);
+        logIncome.invoke(incomeModel);
 
         verify(mockIncomeRepository, times(0))
                 .save(any(IncomeModel.class));

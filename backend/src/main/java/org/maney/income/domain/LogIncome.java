@@ -3,7 +3,7 @@ import org.maney.user.domain.UserRepository;
 import java.math.BigDecimal;
 import java.util.Currency;
 
-public class RecordIncome {
+public class LogIncome {
     private final IncomeEntityMapper incomeEntityMapper;
     IncomeCategoryRepository incomeCategoryRepository; // income repo port
     UserRepository userRepository; // income repo port
@@ -11,10 +11,10 @@ public class RecordIncome {
     IncomePresenter incomePresenter; // income presenter port
     final String SWISS_FRANC_CURRENCY_CODE = "CHF";
 
-    public RecordIncome(IncomeRepository incomeRepository,
-                        IncomeCategoryRepository incomeCategoryRepository,
-                        UserRepository userRepository,
-                        IncomePresenter incomePresenter) {
+    public LogIncome(IncomeRepository incomeRepository,
+                     IncomeCategoryRepository incomeCategoryRepository,
+                     UserRepository userRepository,
+                     IncomePresenter incomePresenter) {
         this.incomeCategoryRepository = incomeCategoryRepository;
         this.userRepository = userRepository;
         this.incomeRepository = incomeRepository;
@@ -30,7 +30,7 @@ public class RecordIncome {
             return;
         }
 
-        if(userRepository.doesUserExist(incomeModel.ownerId) == false) {
+        if(!userRepository.doesUserExist(incomeModel.ownerId)) {
             String message = String.format("User %s not found", incomeModel.ownerId);
             this.incomePresenter.presentIncomeCannotBeRecorded(message);
             return;
@@ -41,9 +41,6 @@ public class RecordIncome {
             incomeCategoryModel = new IncomeCategoryModel(incomeModel.categoryName);
             this.incomeCategoryRepository.create(incomeCategoryModel);
         }
-
-        // check if user exists in user repo
-        // present user not found
 
         Currency currency;
         try {
