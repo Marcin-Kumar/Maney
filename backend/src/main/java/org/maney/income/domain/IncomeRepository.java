@@ -1,5 +1,11 @@
 package org.maney.income.domain;
 
-public abstract class IncomeRepository {
-    public void  save(IncomeModel incomeModel) {};
+import java.time.Instant;
+
+public interface IncomeRepository {
+    public IncomeModel findByTimeStampAndOwnerId(Instant timestamp, String ownerId);
+
+    public void  save(IncomeModel incomeModel);
+
+    public void  delete(IncomeModel incomeModel);
 }
