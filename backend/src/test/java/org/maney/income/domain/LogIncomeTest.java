@@ -46,6 +46,7 @@ public class LogIncomeTest {
     public void reset() {
         resetMock(mockIncomeRepository);
         resetMock(mockIncomeCategoryRepository);
+        resetMock(mockUserRepository);
         resetMock(mockIncomePresenter);
     }
 
