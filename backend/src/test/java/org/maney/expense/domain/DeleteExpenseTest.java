@@ -13,12 +13,12 @@ class DeleteExpenseTest {
 	@BeforeEach
 	void setUp() {
 		mockExpenseRepository = mock(ExpenseRepository.class);
-		when(mockExpenseRepository.deleteExpenseForUser(anyInt(), anyInt())).thenAnswer();
+		deleteExpense = new DeleteExpense(mockExpenseRepository);
 	}
 
 	@Test
 	void deleteExpenseFromUserBalanceSheet() {
-		deleteExpense.execute();
-		verify(mockExpenseRepository).deleteExpenseForUser(anyInt(), anyInt());
+		deleteExpense.execute(1, 1);
+		verify(mockExpenseRepository, times(1)).deleteExpenseForUser(anyInt(), anyInt());
 	}
 }
