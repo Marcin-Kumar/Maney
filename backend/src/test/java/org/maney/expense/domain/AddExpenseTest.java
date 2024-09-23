@@ -7,23 +7,22 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.verify;
 
-class ModifyExpenseTest {
-	private ModifyExpense modifyExpense;
+class AddExpenseTest {
+	private AddExpense addExpense;
 	private ExpenseRepository mockExpenseRepository;
 
 	@BeforeEach
 	void setUp() {
 		mockExpenseRepository = mock(ExpenseRepository.class);
-		modifyExpense = new ModifyExpense(mockExpenseRepository);
+		addExpense = new AddExpense(mockExpenseRepository);
 	}
 
 	@Test
-	void EditExpenseFromUserBalanceSheet() {
-		modifyExpense.execute(1, new Expense(1,
+	void addAnExpenseToUserBalanceSheet() {
+		addExpense.execute(1, new Expense(1,
 				BigDecimal.valueOf(100.1),
-				"Groceries", "Tomatoes", LocalDateTime.now(), "CHF"));
-		verify(mockExpenseRepository).modifyExpense(anyInt(), any(Expense.class));
+				"Groceries", "Veggies", LocalDateTime.now(), "CHF"));
+		verify(mockExpenseRepository, times(1)).addExpenseForUser(anyInt(), any(Expense.class));
 	}
 }

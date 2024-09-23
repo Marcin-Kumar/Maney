@@ -1,13 +1,13 @@
 package org.maney.expense.domain;
 
-public class ModifyExpense {
+public class AddExpense {
 	private final ExpenseRepository expenseRepository;
 
-	ModifyExpense(ExpenseRepository expenseRepository) {
+	AddExpense(ExpenseRepository expenseRepository) {
 		this.expenseRepository = expenseRepository;
 	}
 
 	public void execute(int ownerId, Expense expense) {
-		expenseRepository.modifyExpense(ownerId, expense);
+		expenseRepository.addExpenseForUser(ownerId, expense);
 	}
 }
