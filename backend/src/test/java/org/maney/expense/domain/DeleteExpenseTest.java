@@ -9,16 +9,29 @@ import static org.mockito.Mockito.verify;
 class DeleteExpenseTest {
 	private DeleteExpense deleteExpense;
 	private ExpenseRepository mockExpenseRepository;
+	private ExpensePresenter mockExpensePresenter;
 
 	@BeforeEach
 	void setUp() {
 		mockExpenseRepository = mock(ExpenseRepository.class);
-		deleteExpense = new DeleteExpense(mockExpenseRepository);
+		mockExpensePresenter = mock(ExpensePresenter.class);
+		deleteExpense = new DeleteExpense(mockExpenseRepository, mockExpensePresenter);
 	}
 
 	@Test
-	void deleteExpenseFromUserBalanceSheet() {
+	void deleteExpenseForUser() throws UserNotFoundException {
 		deleteExpense.execute(1, 1);
 		verify(mockExpenseRepository, times(1)).deleteExpenseForUser(anyInt(), anyInt());
+		verify(mockExpensePresenter, times(1)).presentUserExpenseDeleted();
+	}
+
+	@Test
+	void deleteExpenseForNonExistentUser() throws UserNotFoundException {
+		doThrow(UserNotFoundException.class).when(mockExpenseRepository).deleteExpenseForUser(anyInt(), anyInt());
+
+		deleteExpense.execute(1, 1);
+
+		verify(mockExpenseRepository, times(1)).deleteExpenseForUser(anyInt(), anyInt());
+		verify(mockExpensePresenter, times(1)).presentUserNotFound();
 	}
 }
