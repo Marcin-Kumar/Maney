@@ -2,9 +2,7 @@ package org.maney.data;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Properties;
 
 public class DatabaseInitializer {
@@ -19,6 +17,16 @@ public class DatabaseInitializer {
             final String url = props.getProperty("db_url");
 
             Connection db = DriverManager.getConnection(url, props);
+
+            Statement st = db.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM income");
+
+            while (rs.next()) {
+                System.out.println(rs.getString(1));
+            }
+
+            rs.close();
+            st.close();
 
         } catch (Exception e) {
             if(e instanceof IOException) {
