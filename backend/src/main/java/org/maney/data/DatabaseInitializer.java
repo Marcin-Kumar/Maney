@@ -37,9 +37,7 @@ public class DatabaseInitializer {
                 System.err.println("Failed to load database config file " + configFilePath);
             }
 
-            if (e instanceof SQLException) {
-                System.err.println(e.getMessage());
-            }
+            System.err.println(e.getMessage());
         }
     }
 
