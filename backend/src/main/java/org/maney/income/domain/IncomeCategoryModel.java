@@ -8,4 +8,13 @@ public class IncomeCategoryModel extends IncomeCategoryType {
     public IncomeCategoryModel(String name) {
         super(name, "");
     }
+
+    public  String getName() {
+        return name;
+    }
+
+
+    public  String getDescription() {
+        return description;
+    }
 }
